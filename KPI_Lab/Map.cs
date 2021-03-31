@@ -12,16 +12,14 @@ namespace KPI_Lab
         private bool _isArrived;
         private Booking _booking;
         private DataBaseManager _DBmanager;
+        private List<int[]> map;
+        private List<char[]> mapChar;
+        private Stack<(int, int)> q;
 
-        public void BuildRoute()
+        public Map()
         {
-            int destX = 7;
-            int destY = 7;
-            int startX = 1;
-            int startY = 0;
-            bool builded = false;
-            List<int[]> map = new List<int[]>();
-            List<char[]> mapChar = new List<char[]>();
+            map = new List<int[]>();
+            mapChar = new List<char[]>();
             using (StreamReader sr = new StreamReader(@"../../../Map"))
             {
                 int i =0;
@@ -33,6 +31,17 @@ namespace KPI_Lab
                     i++;
                 }
             }
+
+            _currentLocation = new[] {1, 0};
+            q=new Stack<(int, int)>();
+        }
+        public void BuildRoute()
+        {
+            int destX = 7;
+            int destY = 7;
+            int startX = _currentLocation[0];
+            int startY = _currentLocation[1];
+            bool builded = false;
             map[startY][startX] = 1;
             int k = 1;
             while (!builded)
@@ -60,11 +69,11 @@ namespace KPI_Lab
                     }
                 }k++;
             }
-
             int currX = destX;
             int currY = destY;
-            while (k!=0)
+            while (k!=1)
             {
+                q.Push((currX,currY));
                 mapChar[currY][currX] = 'O';
                 
                         if (map[currY + 1][currX] == k - 1)
@@ -89,6 +98,7 @@ namespace KPI_Lab
                             }
                             } }
                     k--;
+                    
             }
             for (int i = 0; i < map.Count; i++)
             {
@@ -99,18 +109,22 @@ namespace KPI_Lab
 
                 Console.WriteLine();
             }
-
-            Console.WriteLine();
-            Console.WriteLine();
             
-
-
         }
 
 
         private void UpdateLocation()
         {
             
+            // if (q.Count!=0)
+            // {
+            //     (int x, int y) = q.Pop();
+            //     _currentLocation[1] = y;
+            //     _currentLocation[0] = x;
+            //     Console.WriteLine($"{_currentLocation[0]} {_currentLocation[1]}");
+            //     q = new Stack<(int, int)>();
+            //     BuildRoute();
+            // }
         }
         private void ShowParkings(){}
 
