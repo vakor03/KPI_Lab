@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace KPI_Lab
 {
@@ -116,24 +117,51 @@ namespace KPI_Lab
 
         private void UpdateLocation()
         {
-            
-            while (q.Count!=0)
+            if (q.Count!=0)
             {
-                (int x, int y) = q.Pop();
-                mapChar[y][ x] = 'X';
-                for (int i = 0; i < map.Count; i++)
+                Timer t = new Timer(TimerCallback, null, 0, 1000);
+                if (q.Count==0)
                 {
-                    for (int j = 0; j < map[i].Length; j++)
-                    {
-                        Console.Write("{0,1}",mapChar[i][j]);
-                    }
-
-                    Console.WriteLine();
-                    //Console.Clear();
+                    t.Dispose();
                 }
+                ShowParkings();
+                
+            }
+            
+                
+                
+                
+            
+        }
+        private void TimerCallback(Object o) {
+            
+            if (q.Count!=0)
+            {
+                
+                (int x, int y) = q.Pop();
+                            mapChar[y][ x] = 'X';
+            }else{return;}
+            ShowParkings();
+           
+        }
+
+        private void ShowParkings()
+        {
+            Console.Clear();
+            for (int i = 0; i < map.Count; i++)
+            {
+                for (int j = 0; j < map[i].Length; j++)
+                {
+                    Console.Write("{0,1}",mapChar[i][j]);
+                }
+                
+                Console.WriteLine();
+            }
+            if (q.Count==0)
+            {
+                Console.WriteLine("Succesfull");
             }
         }
-        private void ShowParkings(){}
 
         public Parking DestinationRequest()
         {
