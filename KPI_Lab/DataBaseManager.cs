@@ -8,25 +8,26 @@ namespace KPI_Lab
     public class DataBaseManager
     {
         private string _dataBaseRef;
-        private List<Parking> _parkings;
+        public List<Parking> Parkings;
 
-        public DataBaseManager(string dataBaseRef, List<Parking> parkings)
+        public DataBaseManager(string dataBaseRef)
         {
             _dataBaseRef = dataBaseRef;
-            _parkings = parkings;
+            Parkings = new List<Parking>();
+            GetParkings();
         }
 
         public void GetParkings()
         {
-            using (StreamReader streamReader = new StreamReader(_dataBaseRef+"ParkingsBase.txt"))
+            using (StreamReader streamReader = new StreamReader(_dataBaseRef))
             {
                 string data;
                 for (int i = 0; (data = streamReader.ReadLine()) != null; i++)
                 {
                     string[] input = data.Split(',');
-                    Parking parking = new Parking(i, input[1].Split(' ').Select(a => int.Parse(a)).ToArray(),
-                        int.Parse(input[2]), int.Parse(input[3]));
-                    _parkings.Add(parking);
+                    Parking parking = new Parking(i, input[0].Split(' ').Select(a => int.Parse(a)).ToArray(),
+                        int.Parse(input[1]), int.Parse(input[2]));
+                    Parkings.Add(parking);
                 }
             }
         }

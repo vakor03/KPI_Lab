@@ -9,12 +9,12 @@ namespace KPI_Lab
         private ulong _cvvHashCode;
         private (ulong, ulong) _dataExpiringHashCode;
         private ulong _cardHashCode;
-        private Booking _booking;
+        private Parking _parking;
 
-        public Payment(Booking booking)
+        public Payment(Parking parking)
         {
             CardRequest();
-            _booking = booking;
+            _parking = parking;
         }
         
         private ulong HashFunction(string str)
@@ -36,11 +36,15 @@ namespace KPI_Lab
             _cvvHashCode = HashFunction(input[2]);
             _dataExpiringHashCode = (HashFunction(input[1].Split('/')[0]), HashFunction(input[1].Split('/')[1]));
             _cardHashCode = HashFunction(String.Join("", input[0].Split(' ')));
-            
-            return true;
+            if (_cardHashCode > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        private int GetParkingPrice() => _booking.BookingParking.Price;
+        private int GetParkingPrice() => _parking.Price;
 
         public bool MakeTransaction()
         {
