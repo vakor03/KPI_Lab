@@ -11,17 +11,15 @@ namespace KPI_Lab
         private Parking _destination;
         private bool _isArrived;
         private Booking _booking;
-        public DataBaseManager DBmanager;
+        private DataBaseManager _DBmanager;
+        private List<int[]> map;
+        private List<char[]> mapChar;
+        private Stack<(int, int)> q;
 
-        public void BuildRoute()
+        public Map()
         {
-            int destX = 7;
-            int destY = 7;
-            int startX = 1;
-            int startY = 0;
-            bool builded = false;
-            List<int[]> map = new List<int[]>();
-            List<char[]> mapChar = new List<char[]>();
+            map = new List<int[]>();
+            mapChar = new List<char[]>();
             using (StreamReader sr = new StreamReader(@"../../../Map"))
             {
                 int i =0;
@@ -33,6 +31,17 @@ namespace KPI_Lab
                     i++;
                 }
             }
+
+            _currentLocation = new[] {1, 0};
+            q=new Stack<(int, int)>();
+        }
+        public void BuildRoute()
+        {
+            int destX = 7;
+            int destY = 7;
+            int startX = _currentLocation[0];
+            int startY = _currentLocation[1];
+            bool builded = false;
             map[startY][startX] = 1;
             int k = 1;
             while (!builded)
@@ -60,11 +69,11 @@ namespace KPI_Lab
                     }
                 }k++;
             }
-
             int currX = destX;
             int currY = destY;
-            while (k!=0)
+            while (k!=1)
             {
+                q.Push((currX,currY));
                 mapChar[currY][currX] = 'O';
                 
                         if (map[currY + 1][currX] == k - 1)
@@ -89,6 +98,7 @@ namespace KPI_Lab
                             }
                             } }
                     k--;
+                    
             }
             for (int i = 0; i < map.Count; i++)
             {
@@ -99,18 +109,29 @@ namespace KPI_Lab
 
                 Console.WriteLine();
             }
-
-            Console.WriteLine();
-            Console.WriteLine();
+            UpdateLocation();
             
-
-
         }
 
 
         private void UpdateLocation()
         {
             
+            while (q.Count!=0)
+            {
+                (int x, int y) = q.Pop();
+                mapChar[y][ x] = 'X';
+                for (int i = 0; i < map.Count; i++)
+                {
+                    for (int j = 0; j < map[i].Length; j++)
+                    {
+                        Console.Write("{0,1}",mapChar[i][j]);
+                    }
+
+                    Console.WriteLine();
+                    //Console.Clear();
+                }
+            }
         }
         private void ShowParkings(){}
 
