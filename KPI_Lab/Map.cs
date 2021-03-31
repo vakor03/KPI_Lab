@@ -1,4 +1,9 @@
-﻿namespace KPI_Lab
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace KPI_Lab
 {
     public class Map
     {
@@ -7,9 +12,106 @@
         private bool _isArrived;
         private Booking _booking;
         private DataBaseManager _DBmanager;
-        
-        private void BuildRoute(){}
-        private void UpdateLocation(){}
+
+        public void BuildRoute()
+        {
+            int destX = 7;
+            int destY = 7;
+            int startX = 1;
+            int startY = 0;
+            bool builded = false;
+            List<int[]> map = new List<int[]>();
+            List<char[]> mapChar = new List<char[]>();
+            using (StreamReader sr = new StreamReader(@"../../../Map"))
+            {
+                int i =0;
+                string str;
+                while ((str = sr.ReadLine())!=null)
+                {
+                    mapChar.Add(str.ToCharArray());
+                    map.Add(mapChar[i].Select(a => (a==' ')?-2:0).ToArray());
+                    i++;
+                }
+            }
+            map[startY][startX] = 1;
+            int k = 1;
+            while (!builded)
+            {
+                for (int i = 0; i < map.Count; i++)
+                {
+                    for (int j = 0; j < map[0].Length; j++)
+                    {
+                        if (destX==j && destY==i && map[destY][destX]>0)
+                        {
+                            builded = true;
+                        }else if (map[i][j] == k)
+                        {
+                            if (map[i + 1][j]==0)map[i+1][j] = k + 1;
+                            if (map[i][j+1]==0)map[i][j+1] = k + 1;
+                            if(j>0){
+                                if (map[i][j-1]==0)map[i+1][j-1] = k + 1;
+                            }
+                            if(i>0)
+                            {
+                                if (map[i-1][j]==0)map[i-1][j] = k + 1;
+                            }
+                            
+                        }
+                    }
+                }k++;
+            }
+
+            int currX = destX;
+            int currY = destY;
+            while (k!=0)
+            {
+                mapChar[currY][currX] = 'O';
+                
+                        if (map[currY + 1][currX] == k - 1)
+                        {
+                            currY++;
+                        }
+
+                        if (map[currY][currX + 1] == k - 1)
+                        {
+                            currX++;
+                        }
+                        if(currX>0){
+                            if (map[currY][currX - 1] == k - 1)
+                            {
+                                currX--;
+                            }
+
+                            if(currY>0) {
+                            if (map[currY - 1][currX] == k - 1)
+                            {
+                                currY--;
+                            }
+                            } }
+                    k--;
+            }
+            for (int i = 0; i < map.Count; i++)
+            {
+                for (int j = 0; j < map[i].Length; j++)
+                {
+                    Console.Write("{0,1}",mapChar[i][j]);
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
+            
+
+
+        }
+
+
+        private void UpdateLocation()
+        {
+            
+        }
         private void ShowParkings(){}
 
         public Parking DestinationRequest()

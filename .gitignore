@@ -6,3 +6,9 @@ KPI_Lab/.idea/.idea.KPI_Lab/.idea/
 KPI_Lab/obj/
 
 KPI_Lab/.idea/.idea.KPI_Lab/riderModule.iml
+
+*.dll
+
+*.json
+
+*.pdb
