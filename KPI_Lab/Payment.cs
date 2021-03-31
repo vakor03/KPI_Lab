@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace KPI_Lab
 {
@@ -35,6 +36,7 @@ namespace KPI_Lab
             _cvvHashCode = HashFunction(input[2]);
             _dataExpiringHashCode = (HashFunction(input[1].Split('/')[0]), HashFunction(input[1].Split('/')[1]));
             _cardHashCode = HashFunction(String.Join("", input[0].Split(' ')));
+            using (StreamReader streamReader = new StreamReader(@"..\"))
             return true;
         }
 
