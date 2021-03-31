@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace KPI_Lab
 {
@@ -13,11 +16,21 @@ namespace KPI_Lab
             _parkings = parkings;
         }
 
-        public void GetParkings(Parking parking)
+        public void GetParkings()
         {
-            _parkings.Add(parking);
+            using (StreamReader streamReader = new StreamReader(_dataBaseRef+"ParkingsBase.txt"))
+            {
+                string data;
+                for (int i = 0; (data = streamReader.ReadLine()) != null; i++)
+                {
+                    string[] input = data.Split(',');
+                    Parking parking = new Parking(i, input[1].Split(' ').Select(a => int.Parse(a)).ToArray(),
+                        int.Parse(input[2]), int.Parse(input[3]));
+                    _parkings.Add(parking);
+                }
+            }
         }
-        
-        public void UpdateInformation () {}
+
+        public void UpdateInformation() { }
     }
 }

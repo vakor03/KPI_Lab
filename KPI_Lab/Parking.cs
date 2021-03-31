@@ -13,11 +13,12 @@
             Coordinates = coordinates;
             Capacity = capacity;
             Price = price;
+            FreeSpots = capacity;
         }
 
         public float GetFullness()
         {
-            return FreeSpots / Capacity;
+            return (Capacity - FreeSpots) / Capacity;
         }
     }
 }

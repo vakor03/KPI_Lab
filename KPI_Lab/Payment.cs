@@ -36,15 +36,23 @@ namespace KPI_Lab
             _cvvHashCode = HashFunction(input[2]);
             _dataExpiringHashCode = (HashFunction(input[1].Split('/')[0]), HashFunction(input[1].Split('/')[1]));
             _cardHashCode = HashFunction(String.Join("", input[0].Split(' ')));
-            using (StreamReader streamReader = new StreamReader(@"..\"))
+            
             return true;
         }
 
-        private double GetParkingPrice() => _booking.BookingParking.Price;
+        private int GetParkingPrice() => _booking.BookingParking.Price;
 
         public bool MakeTransaction()
         {
-            return true;
+            if (CardRequest())
+            {
+                double price = GetParkingPrice();
+                Console.WriteLine("Your fucking money has been written off");
+                return true;
+            }
+
+            Console.WriteLine("Input card info is invalid");
+            return false;
         }
     }
 }
