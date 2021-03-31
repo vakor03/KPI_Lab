@@ -11,7 +11,7 @@ namespace KPI_Lab
         private Parking _destination;
         private bool _isArrived;
         private Booking _booking;
-        private DataBaseManager _DBmanager;
+        public DataBaseManager DBmanager;
 
         public void BuildRoute()
         {

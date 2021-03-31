@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualBasic;
 
 namespace KPI_Lab
 {
@@ -6,10 +7,13 @@ namespace KPI_Lab
     {
         static void Main(string[] args)
         {
-            Map map = new Map();
-            map.BuildRoute();
-            Console.WriteLine("fwokwok");
-            Console.ReadLine();
+            DataBaseManager dataBaseManager = new DataBaseManager(@"..\..\..\ParkingsBase.txt");
+            Console.WriteLine(dataBaseManager.Parkings[1].GetFullness());
+            
+            Booking booking = new Booking();
+            booking.Book();
+
+            Console.WriteLine(dataBaseManager.Parkings[1].GetFullness());
         }
     }
 }
