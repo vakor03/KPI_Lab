@@ -13,7 +13,6 @@ namespace KPI_Lab
 
         public Payment(Parking parking)
         {
-            CardRequest();
             _parking = parking;
         }
         

@@ -8,7 +8,7 @@ namespace KPI_Lab
     public class DataBaseManager
     {
         private string _dataBaseRef;
-        public List<Parking> Parkings;
+        public List<Parking> Parkings { get; set; }
 
         public DataBaseManager(string dataBaseRef)
         {

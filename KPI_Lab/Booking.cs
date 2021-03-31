@@ -7,10 +7,12 @@ namespace KPI_Lab
         private bool _isPaid;
         private string _bookingTime;
         public Parking BookingParking;
+        private DataBaseManager _dataBaseManager;
         private bool _isBooked;
 
-        public Booking()
+        public Booking(DataBaseManager dataBaseManager)
         {
+            _dataBaseManager = dataBaseManager;
             _isPaid = false;
             _isBooked = false;
         }
@@ -34,20 +36,19 @@ namespace KPI_Lab
             if (_isPaid)
             {
                 _isBooked = true;
-                BookingParking.FreeSpots--;
+                _dataBaseManager.Parkings[BookingParking.Id].FreeSpots--;
             }
         }
 
         private Parking GetDestination()
         {
-            Map map = new Map();
             Console.WriteLine("Choose the parking by ID and booking time");
             Console.Write("ID: ");
             int id = int.Parse(Console.ReadLine());
             Console.WriteLine();
             Console.Write("Booking time: ");
             _bookingTime = Console.ReadLine();
-            return map.DBmanager.Parkings[id];
+            return _dataBaseManager.Parkings[id];
         }
     }
 }

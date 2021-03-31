@@ -12,15 +12,16 @@ namespace KPI_Lab
         private Parking _destination;
         private bool _isArrived;
         private Booking _booking;
-        private DataBaseManager _DBmanager;
+        public DataBaseManager DBmanager { get; set; }
         private List<int[]> map;
         private List<char[]> mapChar;
         private Stack<(int, int)> q;
 
-        public Map()
+        public Map(DataBaseManager dBmanager)
         {
             map = new List<int[]>();
             mapChar = new List<char[]>();
+            DBmanager = dBmanager;
             using (StreamReader sr = new StreamReader(@"../../../Map"))
             {
                 int i =0;
