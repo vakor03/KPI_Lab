@@ -6,7 +6,10 @@ namespace KPI_Lab
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Map map = new Map();
+            map.BuildRoute();
+            Console.WriteLine("fwokwok");
+            Console.ReadLine();
         }
     }
 }

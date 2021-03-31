@@ -2,9 +2,9 @@
 {
     public class Parking
     {
-        public static int Id;
+        public int Id { get; init; }
         public int[] Coordinates;
-        public int Capacity;
+        private int Capacity;
         public int FreeSpots;
         public int Price;
         public Parking(int id, int[] coordinates, int capacity, int price)
