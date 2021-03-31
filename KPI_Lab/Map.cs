@@ -109,6 +109,7 @@ namespace KPI_Lab
 
                 Console.WriteLine();
             }
+            UpdateLocation();
             
         }
 
@@ -116,15 +117,21 @@ namespace KPI_Lab
         private void UpdateLocation()
         {
             
-            // if (q.Count!=0)
-            // {
-            //     (int x, int y) = q.Pop();
-            //     _currentLocation[1] = y;
-            //     _currentLocation[0] = x;
-            //     Console.WriteLine($"{_currentLocation[0]} {_currentLocation[1]}");
-            //     q = new Stack<(int, int)>();
-            //     BuildRoute();
-            // }
+            while (q.Count!=0)
+            {
+                (int x, int y) = q.Pop();
+                mapChar[y][ x] = 'X';
+                for (int i = 0; i < map.Count; i++)
+                {
+                    for (int j = 0; j < map[i].Length; j++)
+                    {
+                        Console.Write("{0,1}",mapChar[i][j]);
+                    }
+
+                    Console.WriteLine();
+                    //Console.Clear();
+                }
+            }
         }
         private void ShowParkings(){}
 
