@@ -50,7 +50,7 @@ namespace KPI_Lab
             if (CardRequest())
             {
                 double price = GetParkingPrice();
-                Console.WriteLine("Your fucking money has been written off");
+                Console.WriteLine("Payment successful");
                 return true;
             }
 

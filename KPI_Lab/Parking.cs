@@ -18,7 +18,7 @@
 
         public override string ToString()
         {
-            return $"Id: {Id} Fullness: {GetFullness()}";
+            return $"Id: {Id} Fullness: {GetFullness()} Price per hour: {Price}";
         }
 
         public float GetFullness()
