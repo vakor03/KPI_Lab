@@ -7,7 +7,7 @@ namespace KPI_Lab
     {
         private ulong _pinHashCode;
         private ulong _cvvHashCode;
-        private (ulong, ulong) _dataExpiringHashCode;
+        private ulong _dataExpiringHashCode;
         private ulong _cardHashCode;
         private Parking _parking;
 
@@ -24,16 +24,16 @@ namespace KPI_Lab
             {
                 hash = hash * (ulong)prime + str[i];
             }
-            return hash%31;
+            return hash%51;
         }
 
         private bool CardRequest()
         {
             Console.WriteLine(@"Input card code, data expiring, cvv code and pin code in format ''XXXX XXXX XXXX XXXX, XX/XX, XXX, XXXX'' ");
-            string[] input = Console.ReadLine().Split(',');
+            string[] input = Console.ReadLine().Split(", ");
             _pinHashCode = HashFunction(input[3]);
             _cvvHashCode = HashFunction(input[2]);
-            _dataExpiringHashCode = (HashFunction(input[1].Split('/')[0]), HashFunction(input[1].Split('/')[1]));
+            _dataExpiringHashCode = HashFunction(String.Join((input[1].Split('/')[0]), HashFunction(input[1].Split('/')[1])));
             _cardHashCode = HashFunction(String.Join("", input[0].Split(' ')));
             if (_cardHashCode > 0)
             {
