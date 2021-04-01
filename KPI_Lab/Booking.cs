@@ -28,6 +28,7 @@ namespace KPI_Lab
                 _isPaid = true;
                 return true;
             }
+
             return false;
         }
 
@@ -44,7 +45,7 @@ namespace KPI_Lab
         private Parking GetDestination()
         {
             Console.Clear();
-            Console.WriteLine("Your parking is: \n{0}",BookingParking.ToString());
+            Console.WriteLine("Your parking is: \n{0}", BookingParking.ToString());
             Console.WriteLine("Choose the parking booking time");
             Console.Write("Booking time: ");
             _bookingTime = Console.ReadLine();

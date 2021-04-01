@@ -25,13 +25,16 @@ namespace KPI_Lab
                 for (int i = 0; (data = streamReader.ReadLine()) != null; i++)
                 {
                     string[] input = data.Split(',');
+                    Random rand = new Random();
                     Parking parking = new Parking(i, input[0].Split(' ').Select(a => int.Parse(a)).ToArray(),
-                        int.Parse(input[1]), int.Parse(input[2]));
+                        int.Parse(input[1]), int.Parse(input[2]), int.Parse(input[3]));
                     Parkings.Add(parking);
                 }
             }
         }
 
-        public void UpdateInformation() { }
+        public void UpdateInformation()
+        {
+        }
     }
 }

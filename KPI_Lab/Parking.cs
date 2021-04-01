@@ -7,23 +7,24 @@
         private int Capacity;
         public int FreeSpots { get; set; }
         public int Price;
-        public Parking(int id, int[] coordinates, int capacity, int price)
+
+        public Parking(int id, int[] coordinates, int capacity, int price, int freeSpots)
         {
             Id = id;
             Coordinates = coordinates;
             Capacity = capacity;
             Price = price;
-            FreeSpots = capacity;
+            FreeSpots = freeSpots;
         }
 
         public override string ToString()
         {
-            return $"Id: {Id} Fullness: {GetFullness()} Price per hour: {Price}";
+            return $"Id: {Id} Fullness: {(int) (GetFullness() * 100)}% Price per hour: {Price}";
         }
 
         public float GetFullness()
         {
-            return (float)(Capacity - FreeSpots) / Capacity;
+            return (float) (Capacity - FreeSpots) / Capacity;
         }
     }
 }
