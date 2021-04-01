@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,16 +13,17 @@ namespace KPI_Lab
         private Parking _destination;
         private bool _isArrived;
         private Booking _booking;
-        public DataBaseManager DBmanager { get; set; }
+        private DataBaseManager _DBmanager;
         private List<int[]> map;
         private List<char[]> mapChar;
         private Stack<(int, int)> q;
 
         public Map(DataBaseManager dBmanager)
         {
+            
+            _DBmanager = dBmanager;
             map = new List<int[]>();
             mapChar = new List<char[]>();
-            DBmanager = dBmanager;
             using (StreamReader sr = new StreamReader(@"../../../Map"))
             {
                 int i =0;
@@ -36,11 +38,12 @@ namespace KPI_Lab
 
             _currentLocation = new[] {1, 0};
             q=new Stack<(int, int)>();
+            _destination = DestinationRequest();
         }
         public void BuildRoute()
         {
-            int destX = 7;
-            int destY = 7;
+            int destX = _destination.Coordinates[0];
+            int destY = _destination.Coordinates[1];
             int startX = _currentLocation[0];
             int startY = _currentLocation[1];
             bool builded = false;
@@ -118,54 +121,61 @@ namespace KPI_Lab
 
         private void UpdateLocation()
         {
-            if (q.Count!=0)
+            while (q.Count!=0)
             {
-                Timer t = new Timer(TimerCallback, null, 0, 1000);
+                (int x, int y) = q.Pop();
+                mapChar[y][ x] = 'X';
+                Console.Clear();
+                for (int i = 0; i < map.Count; i++)
+                {
+                    for (int j = 0; j < map[i].Length; j++)
+                    {
+                        Console.Write("{0,1}",mapChar[i][j]);
+                    }
+                
+                    Console.WriteLine();
+                }
                 if (q.Count==0)
                 {
-                    t.Dispose();
+                    Console.WriteLine("Succesfull");
                 }
-                ShowParkings();
-                
-            }
-            
-                
-                
-                
-            
-        }
-        private void TimerCallback(Object o) {
-            
-            if (q.Count!=0)
-            {
-                
-                (int x, int y) = q.Pop();
-                            mapChar[y][ x] = 'X';
-            }else{return;}
-            ShowParkings();
-           
-        }
+                Console.ReadLine();
 
-        private void ShowParkings()
-        {
-            Console.Clear();
-            for (int i = 0; i < map.Count; i++)
-            {
-                for (int j = 0; j < map[i].Length; j++)
-                {
-                    Console.Write("{0,1}",mapChar[i][j]);
-                }
-                
-                Console.WriteLine();
             }
-            if (q.Count==0)
+            
+                
+                
+                
+            
+        }
+        
+        public void ShowParkings()
+        {
+            for (int i = 0; i < _DBmanager.Parkings.Count; i++)
             {
-                Console.WriteLine("Succesfull");
+                mapChar[_DBmanager.Parkings[i].Coordinates[0]-1][_DBmanager.Parkings[i].Coordinates[0]] = 'G';
+
             }
         }
 
         public Parking DestinationRequest()
         {
+            for (int i = 0; i < _DBmanager.Parkings.Count; i++)
+            {
+                Console.WriteLine(_DBmanager.Parkings[i].ToString());
+                
+            }
+
+            Console.WriteLine("Which do You prefer?(write Id)");
+            int id = int.Parse(Console.ReadLine());
+            for (int i = 0; i < _DBmanager.Parkings.Count; i++)
+            {
+                if (_DBmanager.Parkings[i].Id==id)
+                {
+                    return _DBmanager.Parkings[i];
+                }
+                
+            }
             return null;
         }
 

@@ -16,6 +16,11 @@
             FreeSpots = capacity;
         }
 
+        public override string ToString()
+        {
+            return $"Id: {Id} Fullness: {GetFullness()}";
+        }
+
         public float GetFullness()
         {
             return (float)(Capacity - FreeSpots) / Capacity;
