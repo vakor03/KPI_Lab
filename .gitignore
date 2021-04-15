@@ -12,3 +12,5 @@ KPI_Lab/.idea/.idea.KPI_Lab/riderModule.iml
 *.json
 
 *.pdb
+
+*.tmp
